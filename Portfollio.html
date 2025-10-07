@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samarpan Das | Portfolio</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{
+      overflow-x:hidden;
+      transition:background 0.6s,color 0.6s;
+      background:#0d0d0d;
+      color:#fff;
+    }
+
+    /* Loader */
+    #loader{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:#000;
+      display:flex;justify-content:center;align-items:center;flex-direction:column;
+      z-index:9999;
+      color:#00ffff;
+      font-size:2rem;
+    }
+    .typing{
+      border-right:3px solid #00ffff;white-space:nowrap;overflow:hidden;width:0;
+      animation:typing 3s steps(20,end) forwards,blink 0.75s infinite;
+    }
+    @keyframes typing{from{width:0}to{width:100%}}
+    @keyframes blink{50%{border-color:transparent;}}
+
+    /* Navbar */
+    nav{
+      position:fixed;width:100%;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(0,0,0,0.6);
+      padding:15px 50px;z-index:1000;
+    }
+    nav h1{font-size:1.8rem;color:#00ffff;}
+    nav button{
+      background:none;border:2px solid #00ffff;color:#00ffff;
+      padding:8px 16px;cursor:pointer;border-radius:25px;transition:all .3s;
+    }
+    nav button:hover{background:#00ffff;color:#000;}
+
+    /* Hero */
+    section.hero{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;height:100vh;position:relative;z-index:1;
+    }
+    canvas#particles{
+      position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;
+    }
+
+    .hero img{
+      width:180px;height:180px;border-radius:50%;
+      border:3px solid #00ffff;margin-bottom:20px;z-index:1;
+      opacity:0;animation:fadeFloat 3s ease-in-out forwards;
+    }
+
+    @keyframes fadeFloat{
+      0%{opacity:0;transform:translateY(30px);}
+      50%{opacity:1;transform:translateY(-10px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+
+    .hero h2{font-size:2rem;animation:fadeIn 2s ease forwards;}
+    .hero p{margin-top:10px;color:#aaa;animation:fadeIn 3s ease forwards;}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+    /* About */
+    section.about{
+      padding:80px 20px;text-align:center;background:#111;
+    }
+    section.about h2{color:#00ffff;margin-bottom:20px;}
+    section.about p{max-width:700px;margin:0 auto;line-height:1.7;}
+
+    /* Skills */
+    section.skills{
+      padding:80px 20px;background:#0d0d0d;text-align:center;
+    }
+    .skills h2{color:#00ffff;margin-bottom:30px;}
+    .skill-bubbles{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:20px;
+    }
+    .bubble{
+      padding:15px 25px;border-radius:50px;border:2px solid #00ffff;color:#00ffff;
+      transition:.3s;cursor:pointer;
+    }
+    .bubble:hover{background:#00ffff;color:#000;transform:scale(1.1);}
+
+    /* Contact */
+    section.contact{
+      padding:100px 20px;background:#0d0d0d;text-align:center;position:relative;z-index:1;
+    }
+    .contact h2{
+      color:#00ffff;margin-bottom:50px;font-size:2rem;
+      animation:fadeIn 2s ease forwards;
+    }
+    .contact-container{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:30px;
+    }
+    .contact-card{
+      background:rgba(0,255,255,0.05);border:1px solid #00ffff;
+      padding:25px 35px;border-radius:15px;width:280px;transition:.4s;
+      box-shadow:0 0 15px rgba(0,255,255,0.1);
+      position:relative;overflow:hidden;
+    }
+    .contact-card::before{
+      content:"";position:absolute;top:-50%;left:-50%;
+      width:200%;height:200%;background:radial-gradient(circle,#00ffff33 10%,transparent 10%);
+      background-size:15px 15px;opacity:0;transition:opacity .4s;
+    }
+    .contact-card:hover::before{opacity:.3;}
+    .contact-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 0 25px rgba(0,255,255,0.4);
+    }
+    .contact-card h3{color:#00ffff;margin-bottom:10px;font-size:1.3rem;}
+    .contact-card p{color:#ccc;}
+    .send-btn{
+      margin-top:40px;background:#00ffff;color:#000;border:none;
+      padding:12px 25px;border-radius:30px;cursor:pointer;font-weight:600;transition:.3s;
+    }
+    .send-btn:hover{background:#fff;color:#000;transform:scale(1.05);}
+
+    footer{text-align:center;padding:20px;background:#000;color:#888;}
+
+    /* Light mode */
+    body.light .text{text-decoration-color: #111;}
+    body.light{background: #f6f6f6;;color: #f6f6f6;;}
+    body.light nav{background:rgba(255,255,255,0.7);}
+    body.light nav h1,body.light button{color: #f6f6f6;;border-color:#f6f6f6;}
+    body.light .bubble{border-color:#f6f6f6;color: #f6f6f6;;}
+    body.light .bubble:hover{background: #f6f6f6;;color: #f6f6f6;;}
+    body.light .contact-card{background: #f6f6f6;;border-color:#111;color: #f6f6f6;;}
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="typing">Samarpan Das</div>
+    <p>Loading portfolio...</p>
+  </div>
+
+  <nav>
+    <h1>Samarpan</h1>
+    <button id="theme-toggle">🌗 Theme</button>
+  </nav>
+
+  <canvas id="particles"></canvas>
+
+  <section class="hero">
+    <img src="WhatsApp Image 2025-10-04 at 17.45.42_b2bedfe6.jpg" alt="Samarpan Das">
+    <h2>Hi, I'm <span style="color:#00ffff;">Samarpan Das</span></h2>
+    <p>💻 Full Stack Developer | Frontend & Backend Developer | Based in Kolkata, 7000124</p>
+  </section>
+
+  <section class="about">
+    <h2>💻 About Me</h2>
+    <p>I’m a passionate Front-End Web Developer skilled in HTML, CSS, JavaScript, and React.js. I love turning creative ideas into fully functional, responsive, and visually appealing web interfaces. My goal is to build clean, user-friendly, and high-performance web applications that provide seamless user experiences.</p>
+  </section>
+
+  <section class="skills">
+    <h2>🚀 Skills</h2>
+    <div class="skill-bubbles">
+      <div class="bubble">HTML</div>
+      <div class="bubble">CSS</div>
+      <div class="bubble">JavaScript</div>
+      <div class="bubble">React.js</div>
+      <div class="bubble">Node.js</div>
+      <div class="bubble">Git & GitHub</div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>📬 Contact Me</h2>
+    <div class="contact-container">
+      <div class="contact-card">
+        <h3>📍 Address</h3>
+        <p>Kolkata, 7000124</p>
+      </div>
+      <div class="contact-card">
+        <h3>📞 Phone</h3>
+        <p>8597932307</p>
+      </div>
+      <div class="contact-card">
+        <h3>📧 Email</h3>
+        <p>dsamarpan9@gmail.com</p>
+      </div>
+    </div>
+    <button class="send-btn">Send Message</button>
+  </section>
+
+  <footer>© 2025 Samarpan Das | All Rights Reserved</footer>
+
+  <script>
+    // Loader fade
+    window.addEventListener("load",()=>{
+      setTimeout(()=>{document.getElementById("loader").style.display="none";},2500);
+    });
+
+    // Theme toggle
+    const themeToggle=document.getElementById("theme-toggle");
+    themeToggle.addEventListener("click",()=>{
+      document.body.classList.toggle("light");
+      localStorage.setItem("theme",document.body.classList.contains("light")?"light":"dark");
+    });
+    if(localStorage.getItem("theme")==="light")document.body.classList.add("light");
+
+    // Particle background
+    const canvas=document.getElementById('particles');
+    const ctx=canvas.getContext('2d');
+    function resizeCanvas(){
+      canvas.width=innerWidth;canvas.height=innerHeight;
+    }
+    window.addEventListener("resize",resizeCanvas);
+    resizeCanvas();
+
+    const particles=[];
+    const particleCount=90;
+
+    class Particle{
+      constructor(){
+        this.x=Math.random()*canvas.width;
+        this.y=Math.random()*canvas.height;
+        this.size=Math.random()*2+1;
+        this.speedX=(Math.random()-0.5)*0.6;
+        this.speedY=(Math.random()-0.5)*0.6;
+      }
+      update(){
+        this.x+=this.speedX;this.y+=this.speedY;
+        if(this.x<0||this.x>canvas.width)this.speedX*=-1;
+        if(this.y<0||this.y>canvas.height)this.speedY*=-1;
+      }
+      draw(){
+        ctx.fillStyle="#00ffff";
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+      }
+    }
+    for(let i=0;i<particleCount;i++)particles.push(new Particle());
+
+    function animateParticles(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p=>{p.update();p.draw();});
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+</body>
+</html>
